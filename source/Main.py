@@ -1,5 +1,7 @@
 import os
 import discord
+import time
+import plankton
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,6 +20,11 @@ async def on_message(message):
 
     if message.content.startswith("!?mundo"):
         await message.channel.send("https://media.discordapp.net/attachments/768840996347052042/831901847190372362/real.png")
+
+    if message.content.startswith("!?date"):
+        plankton.create_image()
+        time.sleep(1)
+        await message.channel.send(file='image_date.png')
 
 
 client.run(TOKEN)
