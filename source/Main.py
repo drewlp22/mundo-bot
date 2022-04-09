@@ -5,7 +5,9 @@ import plankton
 from dotenv import load_dotenv
 
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+#TOKEN = os.getenv('DISCORD_TOKEN')
+#TEMP DO NOT COMMIT
+TOKEN = 'OTYyMDk5NDMyOTYxMjMyOTA2.YlCm6w.-BSGTMUqaAruPrwzHfkVCx8kBCw'
 
 client = discord.Client()
 
@@ -30,13 +32,12 @@ async def on_message(message):
     if message.content == "!?pronouns":
         await message.channel.send("My preferred pronouns are he/they/bot/it")
 
+    if message.content == "!?help":
+        htext = open('assets/help.txt')
+        await message.channel.send(htext.read())
+
     if message.content.find("she") != -1 or message.content.find("her") != -1:
         print("Kicking User:", message.author.name)
-        await message.author.kick()
         await message.channel.send("https://cdn.discordapp.com/attachments/656309791194349576/962183853601079346/laser.png")
-
-
-
-
 
 client.run(TOKEN)
