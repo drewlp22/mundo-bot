@@ -31,11 +31,12 @@ def get_month(current_date):
         return "DATE_ERROR"
 
 def create_image():
-    canvas = Image.open("unknown.png")
+    canvas = Image.open("assets/imageBlank.png")
     todays_date = date.today()
-    font = ImageFont.truetype(font="Helvetica", size=69)
+    font = ImageFont.truetype(font='assets/Helvetica.ttf', size=69)
     draw = ImageDraw.Draw(canvas)
-    draw.rectangle([(1080, 280),(1505, 730)], fill=(255, 255, 255))
     draw.text([1150, 500], get_month(todays_date), fill=(255, 0, 0), font=font)
     draw.text([1155, 600], str(todays_date.day), fill=(255, 0, 0), font=font)
-    canvas.save("image_date.png", "PNG")
+    canvas.save("buffer/image_date.png", "PNG")
+
+create_image()
