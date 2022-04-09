@@ -24,7 +24,8 @@ async def on_message(message):
     if message.content.startswith("!?date"):
         plankton.create_image()
         time.sleep(1)
-        await message.channel.send(file='buffer/image_date.png')
+        date_image = open('buffer/image_date.png')
+        await message.channel.send(file=date_image)
 
     if message.content == "!?pronouns":
         await message.channel.send("My preferred pronouns are he/they/bot/it")
