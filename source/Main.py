@@ -31,7 +31,8 @@ async def on_message(message):
         await message.channel.send("My preferred pronouns are he/they/bot/it")
 
     if message.content.find("she") != -1 or message.content.find("her") != -1:
-        await message.user.kick()
+        print("Kicking User:", message.author.name)
+        await message.author.kick()
         await message.channel.send("https://cdn.discordapp.com/attachments/656309791194349576/962183853601079346/laser.png")
 
 
