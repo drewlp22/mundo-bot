@@ -5,9 +5,7 @@ import plankton
 from dotenv import load_dotenv
 
 load_dotenv()
-#TOKEN = os.getenv('DISCORD_TOKEN')
-#TEMP DO NOT COMMIT
-TOKEN = 'OTYyMDk5NDMyOTYxMjMyOTA2.YlCm6w.-BSGTMUqaAruPrwzHfkVCx8kBCw'
+TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = discord.Client()
 
