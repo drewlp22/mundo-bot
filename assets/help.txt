@@ -1,4 +1,4 @@
-Hello, I'm Mundo! Here are some commands I wiil respond to:
+Hello, I'm Mundo! Here are some commands I will respond to:
 **!?date**: Returns today's date as told by my guy Plankton.
 **!?help**: Wait... how did you?
 **!?mundo**: Mundo ⁉️
