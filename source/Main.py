@@ -55,7 +55,7 @@ async def on_message(message):
         htext = open('assets/help.txt')
         await message.channel.send(htext.read())
 
-    if message.content.find("she") != -1 or message.content.find("her") != -1:
+    if message.content.find(" she ") != -1 or message.content.find(" her ") != -1:
         print("Kicking User:", message.author.name)
         await message.channel.send("https://cdn.discordapp.com/attachments/656309791194349576/962183853601079346/laser.png")
 
