@@ -133,7 +133,7 @@ async def on_message(message):
         index = 0
         for key in players:
             leaderboard.append((players[key].user, players[key].balance))
-        leaderboard.sort(key = lambda x: x[1]) #Sort leaderboard by balance
+        leaderboard.sort(key = lambda x: x[1], reverse=True) #Sort leaderboard by balance
         index = 1
         output = "Top Balances:\n"
         for x in leaderboard:
