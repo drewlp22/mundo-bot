@@ -1,5 +1,13 @@
 Hello, I'm Mundo! Here are some commands I will respond to:
-**!?date**: Returns today's date as told by my guy Plankton.
-**!?help**: Wait... how did you?
-**!?mundo**: Mundo ⁉️
-**!?pronouns**: My preferred pronouns are he/they/bot/it.
+`!?date`: Returns today's date as told by my guy Plankton.
+`!?help`: Wait... how did you?
+`!?mundo`: Mundo ⁉️
+`!?pronouns`: My preferred pronouns are he/they/bot/it.
+**MundoChain**
+`!?init`: Adds your account to the future
+Coin commands:
+`!?coin bal`: Displays your current balance
+`!?coin mine`: Mines MundoCoin (can be activated every 15 minutes)
+NFT commands:
+`!?nft mint`: Creates a NFT (can be activated every 7 days)
+`!?nft owned`: Displays owned NFTs
