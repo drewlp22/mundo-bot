@@ -88,6 +88,7 @@ async def on_message(message):
     if message.content.startswith('!?init'):
         if message.content == '!?init -forcereset':
             players[message.author.id] = mundochain.Player(message.author.name)
+            await message.channel.send("Account has been setup, start mining and minting!")
             modified_buffer = True
         else:
             try:
@@ -114,10 +115,39 @@ async def on_message(message):
 
     if message.content.startswith('!?coin bal'):
         try:
-            bal = players[message.author.id].balance
-            await message.channel.send("Your balance is " + str(bal) + " MundoCoins")
-        except KeyError:
-            await message.channel.send("Your account has not been initalized, use `!?init`")
+            target_player = message.mentions[0] #throws IndexError
+            try:
+                bal = players[target_player.id].balance
+                await message.channel.send(target_player.name + "'s balance is " + str(bal) + " MundoCoins")
+            except KeyError:
+                await message.channel.send("Mentioned user is not initalized in MundoChain")
+        except IndexError:
+            try:
+                bal = players[message.author.id].balance
+                await message.channel.send("Your balance is " + str(bal) + " MundoCoins")
+            except KeyError:
+                await message.channel.send("Your account has not been initalized, use `!?init`")
+
+    if message.content.startswith('!?coin top'):
+        leaderboard = [] #List of tuples with form (Name, Balance)
+        index = 0
+        for key in players:
+            leaderboard.append((players[key].user, players[key].balance))
+        leaderboard.sort(key = lambda x: x[1]) #Sort leaderboard by balance
+        index = 1
+        output = "Top Balances:\n"
+        for x in leaderboard:
+            output += str(index)
+            output += ". "
+            output += x[0]
+            output += " - "
+            output += str(x[1])
+            output += "\n"
+            index += 1
+            if index > 10:
+                break
+        await message.channel.send(output)    
+
 
     if message.content.startswith('!?nft mint'):
         try:
@@ -132,18 +162,32 @@ async def on_message(message):
         except KeyError:
             await message.channel.send("Your account has not been initalized, use `!?init`")
 
-    if message.content == '!?nft owned':
+    if message.content.startswith('!?nft owned'):
         try:
-            tosend = message.author.name + "'s owned NFTs\n"
-            if len(players[message.author.id].owned) == 0:
-                await message.channel.send("You do not own any NFTs! Use `!?nft mint` to create one.")
-            else:
-                for item in players[message.author.id].owned:
-                    tosend += "-" + item + "\n"
-                await message.channel.send(tosend)
-
-        except KeyError:
-             await message.channel.send("Your account has not been initalized, use `!?init`")
+            target_player = message.mentions[0] #Throws IndexError if no player is mentioned
+            try:
+                tosend = target_player.name + "'s owned NFTs\n"
+                if len(players[target_player.id].owned) == 0:
+                    await message.channel.send(target_player.name + " does not own any NFTs!")
+                else:
+                    nft_id = 1
+                    for item in players[target_player.id].owned:
+                        tosend += str(nft_id) + ". " + item + "\n"
+                    await message.channel.send(tosend)
+            except KeyError:
+                await message.channel.send("Mentioned user is not initalized in MundoChain")
+        except IndexError:
+            try:
+                tosend = message.author.name + "'s owned NFTs\n"
+                if len(players[message.author.id].owned) == 0:
+                    await message.channel.send("You do not own any NFTs! Use `!?nft mint` to create one.")
+                else:
+                    nft_id = 1
+                    for item in players[message.author.id].owned:
+                        tosend += str(nft_id) + ". " + item + "\n"
+                    await message.channel.send(tosend)
+            except KeyError:
+                await message.channel.send("Your account has not been initalized, use `!?init`")
 
     if message.content.startswith('!!buff'):
         await message.channel.send(str(modified_buffer))
