@@ -1,6 +1,16 @@
 import numpy as np
 import datetime as dt
 
+def timeconvert(ctime):
+    difference = ctime - dt.datetime.now()
+    d_days = difference.days
+    d_sec = difference.seconds
+    md_min = int(d_sec/60) % 60
+    md_hours = int(d_sec / 3600)
+    md_sec = d_sec % 60
+
+    return (d_days, md_hours, md_min, md_sec)
+
 class CooldownError(Exception):
     pass
 

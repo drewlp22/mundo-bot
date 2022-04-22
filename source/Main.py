@@ -1,4 +1,5 @@
 import asyncio
+import time
 import os
 import discord
 import plankton
@@ -17,7 +18,7 @@ client = discord.Client()
 #Global Variables
 players = dict()
 modified_buffer = False
-BACKUP_COOLDOWN = 300
+BACKUP_COOLDOWN = 30
 
 async def backup_chain():
     global modified_buffer
@@ -25,7 +26,9 @@ async def backup_chain():
         await asyncio.sleep(BACKUP_COOLDOWN)
         try:
             if modified_buffer:
-                print("Backing up player data...")
+                curtime = time.localtime()
+                stime = time.strftime("%H:%M:%S", curtime)
+                print("Backing up player data..." + stime)
                 with open('buffer/mc-leger.pickle', 'wb') as f:
                     global players
                     pickle.dump(players, f, pickle.HIGHEST_PROTOCOL)
@@ -105,11 +108,15 @@ async def on_message(message):
             #Confirm cooldown has not been reached
             try:
                 amount = players[message.author.id].mine()
-                await message.channel.send("You just successfully mined **" + str(int(amount)) + "** MundoCoins")
+                await message.channel.send("You just successfully mined **" + str(int(amount)) + "** MundoCoin")
                 modified_buffer = True
             except mundochain.CooldownError:
-                #TODO: replace with timer
-                await message.channel.send("Mining is on cooldown! Wait until: " + str(players[message.author.id].mining_cooldown))
+                #Timer
+                c_tup = mundochain.timeconvert(players[message.author.id].mining_cooldown)
+                min_remain = c_tup[2]
+                sec_remain = c_tup[3]
+                await message.channel.send("Mining is on cooldown! Wait: " + str(min_remain) + " minutes " + str(sec_remain) + " seconds.")
+                #await message.channel.send("Mining is on cooldown! Wait until: " + str(players[message.author.id].mining_cooldown))
         except KeyError:
             await message.channel.send("Your account has not been initalized, use `!?init`")
 
@@ -157,7 +164,14 @@ async def on_message(message):
                 modified_buffer = True
                 await message.channel.send("NFT: " + created_nft + " has been created!")
             except mundochain.CooldownError:
-                await message.channel.send("Minting is on cooldown! Wait until: " + str(players[message.author.id].minting_cooldown))
+                #Calculate time difference between now and cooldown
+                c_tup = mundochain.timeconvert(players[message.author.id].minting_cooldown)
+                days_remain = c_tup[0]
+                hours_remain = c_tup[1]
+                min_remain = c_tup[2]
+                sec_remain = c_tup[3]
+                await message.channel.send("Minting is on cooldown! Wait: " + str(days_remain) + " days, " + str(hours_remain) + " hours, " + str(min_remain) + " minutes, " + str(sec_remain) + " seconds.")
+                #await message.channel.send("Minting is on cooldown! Wait until: " + str(players[message.author.id].minting_cooldown))
 
         except KeyError:
             await message.channel.send("Your account has not been initalized, use `!?init`")

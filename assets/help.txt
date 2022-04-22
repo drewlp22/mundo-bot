@@ -9,5 +9,5 @@ Coin commands:
 `!?coin bal`: Displays your current balance
 `!?coin mine`: Mines MundoCoin (can be activated every 15 minutes)
 NFT commands:
-`!?nft mint`: Creates a NFT (can be activated every 7 days)
+`!?nft mint <CONTENT-HERE>`: Creates a NFT (can be activated every 7 days)
 `!?nft owned`: Displays owned NFTs
