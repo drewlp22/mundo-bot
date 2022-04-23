@@ -10,4 +10,6 @@ Coin commands:
 `!?coin mine`: Mines MundoCoin (can be activated every 15 minutes)
 NFT commands:
 `!?nft mint <CONTENT-HERE>`: Creates a NFT (can be activated every 7 days)
+`!?nft cd`: Displays cooldown for NFT minting
+`!?nft prev`: Displays how NFT will appear in MundoChain
 `!?nft owned`: Displays owned NFTs

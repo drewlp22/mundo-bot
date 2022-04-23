@@ -1,5 +1,6 @@
 import asyncio
 import time
+import datetime as dt
 import os
 import discord
 import plankton
@@ -18,7 +19,7 @@ client = discord.Client()
 #Global Variables
 players = dict()
 modified_buffer = False
-BACKUP_COOLDOWN = 30
+BACKUP_COOLDOWN = 150
 
 async def backup_chain():
     global modified_buffer
@@ -175,6 +176,23 @@ async def on_message(message):
 
         except KeyError:
             await message.channel.send("Your account has not been initalized, use `!?init`")
+
+    if message.content.startswith('!?nft prev'):
+        created_nft = message.content[11:]
+        await message.channel.send("NFT wiil display as: " + created_nft)
+
+    if message.content.startswith('!?nft cd'):
+        cooldown = players[message.author.id].minting_cooldown
+        c_tup = mundochain.timeconvert(cooldown)
+        days_remain = c_tup[0]
+        hours_remain = c_tup[1]
+        min_remain = c_tup[2]
+        sec_remain = c_tup[3]
+        if dt.datetime.now() < cooldown:
+            await message.channel.send("Minting cooldown: " + str(days_remain) + " days, " + str(hours_remain) + " hours, " + str(min_remain) + " minutes, " + str(sec_remain) + " seconds.")
+        else:
+            await message.channel.send("Minting is ready!")
+
 
     if message.content.startswith('!?nft owned'):
         try:
