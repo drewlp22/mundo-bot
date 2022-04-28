@@ -6,10 +6,11 @@ Hello, I'm Mundo! Here are some commands I will respond to:
 **MundoChain**
 `!?init`: Adds your account to the future
 Coin commands:
-`!?coin bal`: Displays your current balance
+`!?coin bal [User]`: Displays your current balance
 `!?coin mine`: Mines MundoCoin (can be activated every 15 minutes)
+`!?coin top`: Displays leaderboard of coin owners
 NFT commands:
 `!?nft mint <CONTENT-HERE>`: Creates a NFT (can be activated every 7 days)
 `!?nft cd`: Displays cooldown for NFT minting
-`!?nft prev`: Displays how NFT will appear in MundoChain
-`!?nft owned`: Displays owned NFTs
+`!?nft prev <CONTENT-HERE>`: Displays how NFT will appear in MundoChain
+`!?nft owned [User]`: Displays owned NFTs

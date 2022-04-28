@@ -179,7 +179,7 @@ async def on_message(message):
 
     if message.content.startswith('!?nft prev'):
         created_nft = message.content[11:]
-        await message.channel.send("NFT wiil display as: " + created_nft)
+        await message.channel.send("NFT will display as: " + created_nft)
 
     if message.content.startswith('!?nft cd'):
         cooldown = players[message.author.id].minting_cooldown
@@ -205,6 +205,7 @@ async def on_message(message):
                     nft_id = 1
                     for item in players[target_player.id].owned:
                         tosend += str(nft_id) + ". " + item + "\n"
+                        nft_id += 1
                     await message.channel.send(tosend)
             except KeyError:
                 await message.channel.send("Mentioned user is not initalized in MundoChain")
