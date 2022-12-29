@@ -7,6 +7,7 @@ import plankton
 import mungoid
 import mundochain
 import pickle
+import mc_graphics
 from dotenv import load_dotenv
 
 #from source.mundochain import CooldownError
@@ -142,19 +143,24 @@ async def on_message(message):
         for key in players:
             leaderboard.append((players[key].user, players[key].balance))
         leaderboard.sort(key = lambda x: x[1], reverse=True) #Sort leaderboard by balance
-        index = 1
-        output = "Top Balances:\n"
-        for x in leaderboard:
-            output += str(index)
-            output += ". "
-            output += x[0]
-            output += " - "
-            output += str(x[1])
-            output += "\n"
-            index += 1
-            if index > 10:
-                break
-        await message.channel.send(output)    
+
+        if message.content.startswith('!?coin top graph'):
+            mc_graphics.top_chart(leaderboard)
+            await message.channel.send(file=discord.File('buffer/data.png'))
+        else:
+            index = 1
+            output = "Top Balances:\n"
+            for x in leaderboard:
+                output += str(index)
+                output += ". "
+                output += x[0]
+                output += " - "
+                output += str(x[1])
+                output += "\n"
+                index += 1
+                if index > 10:
+                    break
+            await message.channel.send(output)    
 
 
     if message.content.startswith('!?nft mint'):
@@ -218,6 +224,7 @@ async def on_message(message):
                     nft_id = 1
                     for item in players[message.author.id].owned:
                         tosend += str(nft_id) + ". " + item + "\n"
+                        nft_id += 1
                     await message.channel.send(tosend)
             except KeyError:
                 await message.channel.send("Your account has not been initalized, use `!?init`")
