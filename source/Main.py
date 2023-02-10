@@ -8,6 +8,8 @@ import mungoid
 import mundochain
 import pickle
 import mc_graphics
+import openai
+import gpt
 from dotenv import load_dotenv
 
 #from source.mundochain import CooldownError
@@ -229,6 +231,17 @@ async def on_message(message):
             except KeyError:
                 await message.channel.send("Your account has not been initalized, use `!?init`")
 
+    if message.content.startswith('!?write'):
+        try:
+            if (players[message.author.id].balance < 1.5 * len(message.content)):
+                await message.channel.send("You do not have enough MundoCoin to generate text, go mine some.")
+            else:
+                gpt_response = gpt.write(message.content[8:])
+                await message.channel.send(gpt_response['choices'][0]['text'])
+                players[message.author.id].balance -= gpt_response['usage']['total_tokens']
+        except KeyError:
+            await message.channel.send("Your account has not been initalized, use `!?init`")
+
     if message.content.startswith('!!buff'):
         await message.channel.send(str(modified_buffer))
     
@@ -241,8 +254,10 @@ async def on_message(message):
         htext = open('assets/help.txt')
         await message.channel.send(htext.read())
 
+    """
     if message.content.find(" she ") != -1 or message.content.find(" her ") != -1:
         print("Kicking User:", message.author.name)
         await message.channel.send("https://cdn.discordapp.com/attachments/656309791194349576/962183853601079346/laser.png")
+    """
 
 client.run(TOKEN)
